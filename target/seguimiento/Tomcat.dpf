@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/seguimientopago">
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" logAbandoned="true" maxIdle="20" maxTotal="50" maxWaitMillis="15000" minIdle="5" name="jdbc/seguimientopagoDS" password="Programacion2023*" removeAbandonedOnBorrow="true" removeAbandonedTimeout="60" testOnBorrow="true" testWhileIdle="true" timeBetweenEvictionRunsMillis="30000" type="javax.sql.DataSource" url="jdbc:postgresql://10.30.80.53:5432/seguimientopago" username="developer" validationQuery="SELECT 1"/>
+</Context>

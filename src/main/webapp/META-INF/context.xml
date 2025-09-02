@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/seguimientopago"/>
+<Context antiJARLocking="true" path="/seguimientopago">
+
+    <Resource
+        name="jdbc/seguimientopagoDS"
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://10.30.80.53:5432/seguimientopago"
+        username="developer"
+        password="Programacion2023*"
+
+        maxTotal="50"                
+        maxIdle="20"                 
+        minIdle="5"                  
+        maxWaitMillis="15000"       
+
+        validationQuery="SELECT 1"   
+        testOnBorrow="true"          
+        testWhileIdle="true"         
+        timeBetweenEvictionRunsMillis="30000"  
+        removeAbandonedOnBorrow="true"          
+        removeAbandonedTimeout="60"             
+        logAbandoned="true"                     
+    />
+</Context>
+

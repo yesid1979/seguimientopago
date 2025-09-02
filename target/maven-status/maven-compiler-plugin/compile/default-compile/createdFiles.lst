@@ -1,0 +1,4 @@
+com\seguimiento\bean\Contribuyente.class
+com\seguimiento\config\Conexion.class
+com\seguimiento\controlador\ContribuyenteController.class
+com\seguimiento\modelo\ModeloContribuyente.class
