@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
@@ -20,14 +19,18 @@
                         <a class="nav-link" href="layout-sidenav-light.html">Predios</a>
                     </nav>
                 </div>
-                <a class="nav-link" href="notificaciones.jsp">
-                    <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
-                    Notificaciones
+                <div class="sb-sidenav-menu-heading">Administracion</div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Seguridad
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <a class="nav-link" href="cobros.jsp">
-                    <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
-                    Cobros
-                </a>
+                <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/usuarios/listado_usuarios.jsp">Usuarios</a>
+                        <a class="nav-link" href="#">Roles</a>
+                    </nav>
+                </div>
             </div>
         </div>
         <div class="sb-sidenav-footer">

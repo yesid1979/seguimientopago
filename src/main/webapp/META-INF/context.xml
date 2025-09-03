@@ -6,7 +6,7 @@
         auth="Container"
         type="javax.sql.DataSource"
         driverClassName="org.postgresql.Driver"
-        url="jdbc:postgresql://10.30.80.53:5432/seguimientopago"
+        url="jdbc:postgresql://10.30.80.53:5432/seguimientos"
         username="developer"
         password="Programacion2023*"
 

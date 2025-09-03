@@ -1,5 +1,5 @@
-<%@ include file="header.jsp" %>
-<%@ include file="menu.jsp" %>
+<jsp:include page="header.jsp" />
+<jsp:include page="menu.jsp" />
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -555,4 +555,4 @@
             </div>
         </div>
     </main>
-    <%@ include file="footer.jsp" %>
+    <jsp:include page="footer.jsp" />

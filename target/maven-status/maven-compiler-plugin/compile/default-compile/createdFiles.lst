@@ -1,4 +1,9 @@
 com\seguimiento\bean\Contribuyente.class
-com\seguimiento\config\Conexion.class
-com\seguimiento\controlador\ContribuyenteController.class
+com\seguimiento\bean\Profesion.class
+com\seguimiento\modelo\ModeloUsuarios.class
+com\seguimiento\bean\Usuario.class
+com\seguimiento\controlador\UsuariosController.class
 com\seguimiento\modelo\ModeloContribuyente.class
+com\seguimiento\config\Conexion.class
+com\seguimiento\bean\Rol.class
+com\seguimiento\controlador\ContribuyenteController.class

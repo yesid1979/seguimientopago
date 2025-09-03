@@ -17,7 +17,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <a href="${pageContext.request.contextPath}/ControladorConcepto.do?accion=nuevo" class="btn btn-primary" title="Nueva concepto"><i class="fa fa-plus-circle"></i> Nuevo</a>
-                    <button class="btn btn-danger btn-raised pull-right" id="btn_modal" data-toggle="modal" data-target="#myModal" title="Eliminar registros" style="float: right;"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                    <!--button class="btn btn-danger btn-raised pull-right" id="btn_modal" data-toggle="modal" data-target="#myModal" title="Eliminar registros" style="float: right;"><i class="fas fa-trash-alt"></i> Eliminar</button!-->
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
