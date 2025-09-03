@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', event => {
     $('#TblClientes').DataTable({
         "processing": true,
         "serverSide": true,
+        "responsive": true,
         "ajax": {
             "url": "../ControladorContribuyente.do",
             "type": "POST"

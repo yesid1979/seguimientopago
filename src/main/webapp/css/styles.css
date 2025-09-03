@@ -11241,3 +11241,15 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+/* Ajustar solo el combobox de DataTables */
+.dataTables_length select {
+    width: auto; /* Ajusta automáticamente según el contenido */
+    min-width: 70px; /* Define un ancho mínimo */
+    max-width: 120px; /* Evita que sea demasiado grande */
+    padding: 4px 8px; /* Espaciado interno */
+    border-radius: 6px; /* Bordes redondeados */
+}
+/* Justificar el texto de la descripción */
+.descripcion-tabla {
+    text-align: justify;
+}
