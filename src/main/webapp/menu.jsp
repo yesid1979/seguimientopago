@@ -16,12 +16,12 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="${pageContext.request.contextPath}/clientes/listado_clientes.jsp">Contribuyentes</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Predios</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/predios/listado_predios.jsp">Predios</a>
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Administracion</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Seguridad
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>

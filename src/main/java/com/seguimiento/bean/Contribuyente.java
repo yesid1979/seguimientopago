@@ -7,6 +7,7 @@ public class Contribuyente implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int idContribuyente;
+    private String cedContribuyente;
     private String nomContribuyente;
     private String celContribuyente;
     private String correoContribuyente;
@@ -17,10 +18,14 @@ public class Contribuyente implements Serializable {
     public Contribuyente() {
     }
 
+    public Contribuyente(String nomContribuyente) {
+        this.nomContribuyente = nomContribuyente;
+    }
+   
     // Constructor con parámetros
-    public Contribuyente(int idContribuyente, String nomContribuyente, String celContribuyente,
-            String correoContribuyente, String dirContribuyente, String estadoContribuyente) {
+    public Contribuyente(int idContribuyente, String cedContribuyente, String nomContribuyente, String celContribuyente, String correoContribuyente, String dirContribuyente, String estadoContribuyente) {
         this.idContribuyente = idContribuyente;
+        this.cedContribuyente = cedContribuyente;
         this.nomContribuyente = nomContribuyente;
         this.celContribuyente = celContribuyente;
         this.correoContribuyente = correoContribuyente;
@@ -35,6 +40,14 @@ public class Contribuyente implements Serializable {
 
     public void setIdContribuyente(int idContribuyente) {
         this.idContribuyente = idContribuyente;
+    }
+
+    public String getCedContribuyente() {
+        return cedContribuyente;
+    }
+
+    public void setCedContribuyente(String cedContribuyente) {
+        this.cedContribuyente = cedContribuyente;
     }
 
     public String getNomContribuyente() {

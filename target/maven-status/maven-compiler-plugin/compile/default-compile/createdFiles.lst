@@ -1,5 +1,8 @@
 com\seguimiento\bean\Contribuyente.class
+com\seguimiento\bean\Predio.class
+com\seguimiento\controlador\PrediosController.class
 com\seguimiento\bean\Profesion.class
+com\seguimiento\modelo\ModeloPredios.class
 com\seguimiento\modelo\ModeloUsuarios.class
 com\seguimiento\bean\Usuario.class
 com\seguimiento\controlador\UsuariosController.class

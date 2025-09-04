@@ -30,6 +30,7 @@
 <script src="${pageContext.request.contextPath}/assets/demo/chart-area-demo.js"></script>
 <script src="${pageContext.request.contextPath}/js/TblUsuarios.js"></script>
 <script src="${pageContext.request.contextPath}/js/TblClientes.js"></script>
+<script src="${pageContext.request.contextPath}/js/TblPredios.js"></script>
 </body>
 </html>
 

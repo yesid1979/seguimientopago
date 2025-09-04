@@ -17,7 +17,7 @@
             </div>
             <div class="card mb-4">
                 <div class="card-header">
-                    <button id="btnAgregar" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Nuevo Usuario</button>
+                    <button id="btnAgregar" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Nuevo usuario</button>
                     <!--button class="btn btn-danger btn-raised pull-right" id="btn_modal" data-toggle="modal" data-target="#myModal" title="Eliminar registros" style="float: right;"><i class="fas fa-trash-alt"></i> Eliminar</button!-->
                 </div>
                 <div class="card-body">

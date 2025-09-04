@@ -8,6 +8,10 @@
         <servlet-name>UsuariosController</servlet-name>
         <servlet-class>com.seguimiento.controlador.UsuariosController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PrediosController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.PrediosController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ContribuyenteController</servlet-name>
         <url-pattern>/ControladorContribuyente.do</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>UsuariosController</servlet-name>
         <url-pattern>/ControladorUsuarios.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrediosController</servlet-name>
+        <url-pattern>/ControladorPredios.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

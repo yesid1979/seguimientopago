@@ -1,9 +1,12 @@
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\modelo\ModeloUsuarios.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Profesion.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Rol.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Usuario.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\config\Conexion.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\modelo\ModeloContribuyente.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\controlador\UsuariosController.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\controlador\ContribuyenteController.java
-C:\Users\yesid.piedrahita\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Contribuyente.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Contribuyente.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\modelo\ModeloContribuyente.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\config\Conexion.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\controlador\PrediosController.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\modelo\ModeloUsuarios.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Profesion.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Usuario.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\controlador\ContribuyenteController.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\controlador\UsuariosController.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Predio.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\bean\Rol.java
+C:\Users\Soporte y Desarrollo\Documents\NetBeansProjects\seguimientopago\src\main\java\com\seguimiento\modelo\ModeloPredios.java
