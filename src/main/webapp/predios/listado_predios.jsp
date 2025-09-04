@@ -25,12 +25,15 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Matrícula</th>
-                                    <th>Vereda/Barrio</th>
-                                    <th>Dirección</th>
-                                    <th>Valor Pendiente</th>
-                                    <th>Contribuyente</th>
-                                    <th>Estado</th>
+                                    <th>Id Predio</th>
+                                    <th>Matricula</th>
+                                    <th>No. de recibo</th>
+                                    <th>Cedula propietario</th>
+                                    <th>Propietario</th>
+                                    <th>Direccion</th>
+                                    <th>Vereda o barrio</th>
+                                    <th>Valor pendiente</th>
+                                    <th>Vigencia</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -61,7 +64,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="id_predio">ID Predio</label>
-                            <input type="text" name="id_predio" id="id_predio" class="form-control">
+                            <input type="text" name="id_predio" id="id_predio" class="form-control" required>
                         </div>
                         <div class="col-md-4">
                             <label for="matricula_predio">Matrícula</label>

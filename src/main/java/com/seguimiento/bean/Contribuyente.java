@@ -18,10 +18,12 @@ public class Contribuyente implements Serializable {
     public Contribuyente() {
     }
 
-    public Contribuyente(String nomContribuyente) {
+    public Contribuyente(String cedContribuyente, String nomContribuyente) {
+        this.cedContribuyente = cedContribuyente;
         this.nomContribuyente = nomContribuyente;
     }
-   
+
+
     // Constructor con parámetros
     public Contribuyente(int idContribuyente, String cedContribuyente, String nomContribuyente, String celContribuyente, String correoContribuyente, String dirContribuyente, String estadoContribuyente) {
         this.idContribuyente = idContribuyente;

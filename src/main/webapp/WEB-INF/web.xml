@@ -12,6 +12,10 @@
         <servlet-name>PrediosController</servlet-name>
         <servlet-class>com.seguimiento.controlador.PrediosController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RolesController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.RolesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ContribuyenteController</servlet-name>
         <url-pattern>/ControladorContribuyente.do</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>PrediosController</servlet-name>
         <url-pattern>/ControladorPredios.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RolesController</servlet-name>
+        <url-pattern>/ControladorRol.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

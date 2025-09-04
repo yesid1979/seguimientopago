@@ -3,6 +3,7 @@ $(document).ready(function () {
     // ================================
     // FUNCIÓN PARA BUSCAR CONTRIBUYENTE POR CÉDULA
     // ================================
+    $("#id_predio").focus();
     function buscarContribuyentePorCedula(cedula) {
         return $.ajax({
             url: '../ControladorContribuyente.do',
@@ -28,11 +29,25 @@ $(document).ready(function () {
             {data: 'nroPredio'},
             {data: 'idPredio'},
             {data: 'matriculaPredio'},
-            {data: 'veredaBarrio'},
+            {data: 'numreciboPredio'},
+            {data: 'contribuyente.cedContribuyente'},
+            {data: 'contribuyente.nomContribuyente'},
             {data: 'dirPredio'},
-            {data: 'valorPendiente'},
-            {data: 'contribuyente.nonContribuyente'},
-            {data: 'estadoPredio'},
+            {data: 'veredaBarrio'},
+            {
+                data: 'valorPendiente',
+                render: function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        return new Intl.NumberFormat('es-CO', {
+                            style: 'currency',
+                            currency: 'COP',
+                            minimumFractionDigits: 0
+                        }).format(data);
+                    }
+                    return data; // para orden y búsqueda usa el valor original
+                }
+            },
+            {data: 'vigenciaPredio'},
             {
                 data: null,
                 orderable: false,
@@ -65,6 +80,11 @@ $(document).ready(function () {
         $('#modalPredio').modal('show');
     });
 
+// Cuando el modal termine de mostrarse, poner el focus
+    $('#modalPredio').on('shown.bs.modal', function () {
+        $('#id_predio').trigger('focus');
+    });
+
     // ================================
     // EDITAR PREDIO
     // ================================
@@ -87,7 +107,7 @@ $(document).ready(function () {
                 $('#vigencia_predio').val(data.vigenciaPredio);
                 $('#valor_enviado').val(data.valorEnviado);
                 $('#estado_predio').val(data.estadoPredio);
-                
+
                 // Si hay un contribuyente asociado, mostrar su cédula y nombre
                 if (data.contribuyente) {
                     $('#ced_contribuyente').val(data.contribuyente.cedContribuyente);
@@ -96,7 +116,7 @@ $(document).ready(function () {
                     $('#ced_contribuyente').val('');
                     $('#nom_contribuyente').val('');
                 }
-                
+
                 $('#accionPredio').val('actualizar');
                 $('#modalPredio').modal('show');
             }
@@ -106,21 +126,21 @@ $(document).ready(function () {
     // ================================
     // BUSCAR CONTRIBUYENTE AL CAMBIAR LA CÉDULA
     // ================================
-    $('#ced_contribuyente').on('blur', function() {
+    $('#ced_contribuyente').on('blur', function () {
         let cedula = $(this).val().trim();
         if (cedula !== '') {
             buscarContribuyentePorCedula(cedula)
-                .done(function(response) {
-                    if (response.success && response.data) {
-                        $('#nom_contribuyente').val(response.data.nomContribuyente);
-                    } else {
-                        $('#nom_contribuyente').val('Contribuyente no encontrado');
-                        // Opcional: limpiar el campo de cédula o mostrar un mensaje
-                    }
-                })
-                .fail(function() {
-                    $('#nom_contribuyente').val('Error al buscar');
-                });
+                    .done(function (response) {
+                        if (response.success && response.data) {
+                            $('#nom_contribuyente').val(response.data.nomContribuyente);
+                        } else {
+                            $('#nom_contribuyente').val('Contribuyente no encontrado');
+                            // Opcional: limpiar el campo de cédula o mostrar un mensaje
+                        }
+                    })
+                    .fail(function () {
+                        $('#nom_contribuyente').val('Error al buscar');
+                    });
         } else {
             $('#nom_contribuyente').val('');
         }

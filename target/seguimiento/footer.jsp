@@ -31,6 +31,7 @@
 <script src="${pageContext.request.contextPath}/js/TblUsuarios.js"></script>
 <script src="${pageContext.request.contextPath}/js/TblClientes.js"></script>
 <script src="${pageContext.request.contextPath}/js/TblPredios.js"></script>
+<script src="${pageContext.request.contextPath}/js/TblRoles.js"></script>
 </body>
 </html>
 

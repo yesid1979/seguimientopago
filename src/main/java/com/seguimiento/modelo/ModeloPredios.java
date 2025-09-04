@@ -17,7 +17,7 @@ public class ModeloPredios {
         List<Predio> lista = new ArrayList<>();
         String[] columnas = {
             "p.nro_predio", "p.id_predio", "p.matricula_predio", "p.vereda_barrio",
-            "p.dir_predio", "p.valor_pendiente", "c.nom_contribuyente", "p.estado_predio"
+            "p.dir_predio", "p.numrecibo_predio", "c.nom_contribuyente", "c.ced_contribuyente", "p.vigencia_predio"
         };
         String columnaOrden = "p.nro_predio";
         if (orderColumn != null && !orderColumn.isEmpty()) {
@@ -28,7 +28,7 @@ public class ModeloPredios {
         }
 
         // Contar el número de condiciones en el WHERE
-        int numCondiciones = 8; // Actualiza este número según las condiciones que tengas
+        int numCondiciones = 9; // Actualiza este número según las condiciones que tengas
 
         String sql = "SELECT p.nro_predio, p.id_predio, p.numrecibo_predio, p.matricula_predio, "
                 + "p.vereda_barrio, p.dir_predio, p.valor_pendiente, p.observacion, p.vigencia_predio, "
@@ -37,8 +37,8 @@ public class ModeloPredios {
                 + "FROM predios p "
                 + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
                 + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? OR p.id_predio ILIKE ? OR p.matricula_predio ILIKE ? "
-                + "OR p.vereda_barrio ILIKE ? OR p.dir_predio ILIKE ? OR CAST(p.valor_pendiente AS TEXT) ILIKE ? "
-                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? OR p.estado_predio ILIKE ?) "
+                + "OR p.vereda_barrio ILIKE ? OR p.dir_predio ILIKE ? OR p.numrecibo_predio ILIKE ? "
+                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? OR c.ced_contribuyente ILIKE ? OR p.vigencia_predio ILIKE ?) "
                 + "ORDER BY " + columnaOrden + " " + orderDir + " LIMIT ? OFFSET ?";
 
         try (Connection con = Conexion.getConexion();
@@ -111,13 +111,13 @@ public class ModeloPredios {
     // Contar predios filtrados
 public int contarPrediosFiltrados(String searchValue) {
     // Contar el número de condiciones en el WHERE
-    int numCondiciones = 8; // Debe ser el mismo número que en listarPredios
+    int numCondiciones = 9; // Debe ser el mismo número que en listarPredios
     
     String sql = "SELECT COUNT(*) FROM predios p "
             + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
             + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? OR p.id_predio ILIKE ? OR p.matricula_predio ILIKE ? "
-            + "OR p.vereda_barrio ILIKE ? OR p.dir_predio ILIKE ? OR CAST(p.valor_pendiente AS TEXT) ILIKE ? "
-            + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? OR p.estado_predio ILIKE ?)";
+            + "OR p.vereda_barrio ILIKE ? OR p.dir_predio ILIKE ? OR c.ced_contribuyente ILIKE ? "
+            + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? OR p.numrecibo_predio ILIKE ? OR p.vigencia_predio ILIKE ?)";
     
     try (Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)) {

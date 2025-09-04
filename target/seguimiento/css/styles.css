@@ -11262,3 +11262,23 @@ select:required:invalid {
 select:required:valid {
     border: 2px solid green;
 }*/
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before {
+    content: "\f055"; /* Font Awesome plus */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    background: none !important;
+    color: #007bff;
+    font-size: 13px;
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.dtr-control:before {
+    content: "\f056"; /* Font Awesome minus */
+    color: #dc3545;
+}
+/* Alinear encabezados de DataTables arriba */
+table.dataTable thead th {
+    vertical-align: top !important;
+    text-align: center; /* Opcional: centra el texto horizontalmente */
+    white-space: nowrap; /* Opcional: evita que se partan las palabras */
+}
+
+
