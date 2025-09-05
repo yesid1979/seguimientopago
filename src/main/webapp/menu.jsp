@@ -27,7 +27,7 @@
                 </a>
                 <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/usuarios/listado_usuarios.jsp">Control Administrativo </a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/notificaciones/listado_notificaciones.jsp">Control Administrativo </a>
                         <a class="nav-link" href="#">Cobro Persuasivo</a>
                         <a class="nav-link" href="#">Gestión Jurídica</a>
                     </nav>

@@ -1,5 +1,6 @@
 com\seguimiento\controlador\PrediosController.class
 com\seguimiento\modelo\ModeloRoles.class
+com\seguimiento\modelo\ModeloNotificaciones.class
 com\seguimiento\bean\Profesion.class
 com\seguimiento\modelo\ModeloUsuarios.class
 com\seguimiento\controlador\UsuariosController.class
@@ -12,3 +13,5 @@ com\seguimiento\bean\Usuario.class
 com\seguimiento\modelo\ModeloContribuyente.class
 com\seguimiento\config\Conexion.class
 com\seguimiento\bean\Rol.class
+com\seguimiento\bean\Notificacion.class
+com\seguimiento\controlador\NotificacionesController.class

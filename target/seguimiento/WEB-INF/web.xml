@@ -16,6 +16,10 @@
         <servlet-name>RolesController</servlet-name>
         <servlet-class>com.seguimiento.controlador.RolesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotificacionesController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.NotificacionesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ContribuyenteController</servlet-name>
         <url-pattern>/ControladorContribuyente.do</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>RolesController</servlet-name>
         <url-pattern>/ControladorRol.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificacionesController</servlet-name>
+        <url-pattern>/ControladorNotificaciones.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
