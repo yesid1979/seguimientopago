@@ -5,6 +5,8 @@ import com.seguimiento.bean.Notificacion;
 import com.seguimiento.modelo.ModeloNotificaciones;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,9 +97,9 @@ public class NotificacionesController extends HttpServlet {
         int draw = Integer.parseInt(request.getParameter("draw"));
         int start = Integer.parseInt(request.getParameter("start"));
         int length = Integer.parseInt(request.getParameter("length"));
-        String searchValue = request.getParameter("search[value");
+        String searchValue = request.getParameter("search[value]");
         String orderColumn = request.getParameter("order[0][column]");
-        String orderDir = request.getParameter("order[0][dir");
+        String orderDir = request.getParameter("order[0][dir]");
         int codPredio = Integer.parseInt(request.getParameter("cod_predio"));
 
         List<Notificacion> notificaciones = modelo.listarNotificaciones(start, length, searchValue, orderColumn, orderDir, codPredio);
@@ -128,15 +130,17 @@ public class NotificacionesController extends HttpServlet {
         String valorEnviadoParam = request.getParameter("valor_enviado");
         String estadoNotificacion = request.getParameter("estado_notificacion");
         String agenciaEnvio = request.getParameter("agencia_envio");
-        String observacion = request.getParameter("observacion");
-
+        String observacion = request.getParameter("observacion_notificacion");
+        //  String codPredioParam = request.getParameter("cod_predio");
+        //  System.out.println("Envio de codigo: "+codPredioParam);
         // Manejar el parámetro cod_predio de forma segura
         String codPredioParam = request.getParameter("cod_predio");
-        Integer codPredio = null;
+        int codPredio = 0;
 
         if (codPredioParam != null && !codPredioParam.trim().isEmpty()) {
             try {
                 codPredio = Integer.parseInt(codPredioParam);
+                System.out.println("Envio de codigo: " + codPredio);
             } catch (NumberFormatException e) {
                 // Loggear el error pero continuar con el proceso
                 System.err.println("Error al parsear cod_predio: " + e.getMessage());
@@ -170,7 +174,7 @@ public class NotificacionesController extends HttpServlet {
         notificacion.setValorEnviado(valorEnviado);
 
         // Asignar cod_predio si está disponible
-        if (codPredio != null) {
+        if (codPredio != 0) {
             notificacion.setCodPredio(codPredio);
         }
 
@@ -223,6 +227,7 @@ public class NotificacionesController extends HttpServlet {
     // ================================
     private Notificacion construirNotificacionDesdeRequest(HttpServletRequest request) {
         Notificacion notificacion = new Notificacion();
+        notificacion.setIdNotificacion(Integer.parseInt(request.getParameter("id_notificacion")));
         notificacion.setCodPredio(Integer.parseInt(request.getParameter("cod_predio")));
         notificacion.setFechaNotificacion(request.getParameter("fecha_notificacion"));
         notificacion.setHoraNotificacion(request.getParameter("hora_notificacion"));
@@ -230,7 +235,7 @@ public class NotificacionesController extends HttpServlet {
         notificacion.setValorEnviado(Double.parseDouble(request.getParameter("valor_enviado")));
         notificacion.setEstadoNotificacion(request.getParameter("estado_notificacion"));
         notificacion.setAgenciaEnvio(request.getParameter("agencia_envio"));
-        notificacion.setObservacion(request.getParameter("observacion"));
+        notificacion.setObservacion(request.getParameter("observacion_notificacion"));
         return notificacion;
     }
 
@@ -245,4 +250,5 @@ public class NotificacionesController extends HttpServlet {
         out.flush();
     }
 
+    
 }

@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.seguimiento.config.Conexion;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class ModeloNotificaciones {
 
@@ -56,8 +59,8 @@ public class ModeloNotificaciones {
                 while (rs.next()) {
                     Notificacion n = new Notificacion();
                     n.setIdNotificacion(rs.getInt("id_notificacion"));
-                    n.setFechaNotificacion(rs.getString("fecha_notificacion"));
-                    n.setHoraNotificacion(rs.getString("hora_notificacion"));
+                    n.setFechaNotificacion(convertirFecha(rs.getString("fecha_notificacion")));
+                    n.setHoraNotificacion(convertirHora12(rs.getString("hora_notificacion")));
                     n.setTipoNotificacion(rs.getString("tipo_notificacion"));
                     n.setValorEnviado(rs.getDouble("valor_enviado"));
                     n.setEstadoNotificacion(rs.getString("estado_notificacion"));
@@ -198,7 +201,6 @@ public class ModeloNotificaciones {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     notificacion = new Notificacion();
-                    notificacion.setIdNotificacion(rs.getInt("id_notificacion"));
                     notificacion.setCodPredio(rs.getInt("cod_predio"));
                     notificacion.setFechaNotificacion(rs.getString("fecha_notificacion"));
                     notificacion.setHoraNotificacion(rs.getString("hora_notificacion"));
@@ -213,5 +215,27 @@ public class ModeloNotificaciones {
             e.printStackTrace();
         }
         return notificacion;
+    }
+
+    private String convertirHora12(String hora24) {
+        try {
+            DateTimeFormatter formato24 = DateTimeFormatter.ofPattern("HH:mm");
+            DateTimeFormatter formato12 = DateTimeFormatter.ofPattern("hh:mm a");
+            LocalTime hora = LocalTime.parse(hora24, formato24);
+            return hora.format(formato12);
+        } catch (Exception e) {
+            return hora24; // Si falla, devuelve tal cual
+        }
+    }
+
+    private String convertirFecha(String fechaBD) {
+        try {
+            DateTimeFormatter formatoBD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatoDeseado = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fecha = LocalDate.parse(fechaBD, formatoBD);
+            return fecha.format(formatoDeseado);
+        } catch (Exception e) {
+            return fechaBD; // Si falla, devuelve tal cual
+        }
     }
 }
