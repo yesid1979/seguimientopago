@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="./../header.jsp"/>
 <jsp:include page="./../menu.jsp"/>
 <div id="layoutSidenav_content">
@@ -12,7 +11,7 @@
             <div class="card mb-4">
                 <div class="card-body descripcion-tabla">
                     Esta tabla muestra el listado de roles definidos en el sistema.
-                    Aqu√≠ podr√°s consultar informaci√≥n relevante como el nombre del rol, descripci√≥n y estado actual de cada rol.
+                    AquÌ podr·s consultar informaciÛn relevante como el nombre del rol, descripciÛn y estado actual de cada rol.
                 </div>
             </div>
             <div class="card mb-4">
@@ -26,7 +25,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre del rol</th>
-                                    <th>Descripci√≥n</th>
+                                    <th>DescripciÛn</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -40,26 +39,26 @@
     <!-- Modal para insertar/editar rol -->
     <div class="modal fade" id="modalRol" tabindex="-1" role="dialog" aria-labelledby="modalRolLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content shadow-lg rounded-4 border-0">
                 <form id="formRol">
                     <!-- Campos ocultos -->
                     <input type="hidden" name="accion" id="accionRol" value="insertar">
                     <input type="hidden" name="id_rol" id="id_rol">
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="modalRolLabel">Gesti√≥n de Roles</h5>
-                        <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Cerrar">
-                            <span aria-hidden="true">&times;</span>
+                        <h5 class="modal-title" id="modalRolLabel">GestiÛn de Roles</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true"></span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="nombre_rol">Nombre del rol</label>
+                                <label for="nombre_rol" class="form-label">Nombre del rol</label>
                                 <input type="text" name="nombre_rol" id="nombre_rol" class="form-control" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="estado_rol">Estado</label>
-                                <select name="estado_rol" id="estado_rol" class="form-control" required>
+                                <label for="estado_rol" class="form-label">Estado</label>
+                                <select name="estado_rol" id="estado_rol" class="form-select" required>
                                     <option value="Activo">Activo</option>
                                     <option value="Inactivo">Inactivo</option>
                                 </select>
@@ -67,7 +66,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">
-                                <label for="descripcion_rol">Descripci√≥n</label>
+                                <label for="descripcion_rol" class="form-label">DescripciÛn</label>
                                 <textarea name="descripcion_rol" id="descripcion_rol" class="form-control" rows="4"></textarea>
                             </div>
                         </div>

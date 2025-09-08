@@ -5,8 +5,6 @@ import com.seguimiento.bean.Notificacion;
 import com.seguimiento.modelo.ModeloNotificaciones;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,6 +129,7 @@ public class NotificacionesController extends HttpServlet {
         String estadoNotificacion = request.getParameter("estado_notificacion");
         String agenciaEnvio = request.getParameter("agencia_envio");
         String observacion = request.getParameter("observacion_notificacion");
+        String responsables = request.getParameter("responsable");
         //  String codPredioParam = request.getParameter("cod_predio");
         //  System.out.println("Envio de codigo: "+codPredioParam);
         // Manejar el parámetro cod_predio de forma segura
@@ -162,6 +161,7 @@ public class NotificacionesController extends HttpServlet {
         notificacion.setEstadoNotificacion(estadoNotificacion);
         notificacion.setAgenciaEnvio(agenciaEnvio);
         notificacion.setObservacion(observacion);
+        notificacion.setResponsable(responsables);
 
         // Manejar valor_enviado de forma segura
         double valorEnviado = 0.0;
@@ -236,6 +236,7 @@ public class NotificacionesController extends HttpServlet {
         notificacion.setEstadoNotificacion(request.getParameter("estado_notificacion"));
         notificacion.setAgenciaEnvio(request.getParameter("agencia_envio"));
         notificacion.setObservacion(request.getParameter("observacion_notificacion"));
+        notificacion.setResponsable(request.getParameter("responsable"));
         return notificacion;
     }
 

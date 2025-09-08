@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>FiltroLogin</filter-name>
+        <filter-class>com.seguimiento.config.FiltroLogin</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroLogin</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>ContribuyenteController</servlet-name>
         <servlet-class>com.seguimiento.controlador.ContribuyenteController</servlet-class>
@@ -20,6 +28,26 @@
         <servlet-name>NotificacionesController</servlet-name>
         <servlet-class>com.seguimiento.controlador.NotificacionesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CobrosController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.CobrosController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GestionJuridicaController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.GestionJuridicaController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>com.seguimiento.controlador.DashboardController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ContribuyenteController</servlet-name>
         <url-pattern>/ControladorContribuyente.do</url-pattern>
@@ -39,6 +67,26 @@
     <servlet-mapping>
         <servlet-name>NotificacionesController</servlet-name>
         <url-pattern>/ControladorNotificaciones.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CobrosController</servlet-name>
+        <url-pattern>/ControladorCobros.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GestionJuridicaController</servlet-name>
+        <url-pattern>/ControladorGestionJuridica.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/ControladorLogin.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/ControladorSalir.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/ControladorDashboard.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

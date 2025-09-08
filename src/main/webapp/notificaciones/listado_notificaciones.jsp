@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="./../header.jsp"/>
 <jsp:include page="./../menu.jsp"/>
 <div id="layoutSidenav_content">
@@ -7,14 +6,14 @@
             <h1 class="mt-4">Predios</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard.jsp">Dashboard</a></li>
-                <li class="breadcrumb-item active">Listado de predios para seguimiento</li>
+                <li class="breadcrumb-item active">Listado de predios</li>
             </ol>
 
-            <!-- Descripci√≥n -->
+            <!-- DescripciÛn -->
             <div class="card mb-4">
                 <div class="card-body descripcion-tabla">
-                    Esta tabla muestra el listado de predios registrados en el sistema.
-                    Aqu√≠ podr√°s consultar informaci√≥n relevante como matr√≠cula, ubicaci√≥n, valor pendiente, contribuyente asociado y estado actual de cada predio.
+                    Esta tabla muestra el listado de predios para hacerle notificaciones.
+                    AquÌ podr·s consultar informaciÛn relevante y administrar las notificaciones realizadas.
                 </div>
             </div>
 
@@ -27,11 +26,11 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Id Predio</th>
-                                    <th>Matr√≠cula</th>
+                                    <th>MatrÌcula</th>
                                     <th>No. de recibo</th>
-                                    <th>C√©dula propietario</th>
+                                    <th>CÈdula propietario</th>
                                     <th>Propietario</th>
-                                    <th>Direcci√≥n</th>
+                                    <th>DirecciÛn</th>
                                     <th>Vereda/Barrio</th>
                                     <th>Valor pendiente</th>
                                     <th>Vigencia</th>
@@ -48,18 +47,19 @@
     <!-- Modal Detalles del Predio -->
     <div class="modal fade" id="modalPredioDetalles" tabindex="-1" role="dialog" aria-labelledby="modalPredioDetallesLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
+            <div class="modal-content shadow-lg rounded-4 border-0">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="modalPredioDetallesLabel">Detalles del Predio</h5>
-                    <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true"></span>
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <!-- Informaci√≥n b√°sica del predio -->
+                <div class="modal-body p-4">
+                    <!-- InformaciÛn b·sica del predio -->
                     <div class="row mb-4">
                         <div class="col-md-12">
+                            <div class="section-card">
                             <h4>Datos del Predio</h4>
                             <hr>
                             <div class="row">
@@ -70,7 +70,7 @@
                                     <p><strong>ID predio:</strong> <span id="detalle_id_predio"></span></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <p><strong>Matr√≠cula:</strong> <span id="detalle_matricula"></span></p>
+                                    <p><strong>MatrÌcula:</strong> <span id="detalle_matricula"></span></p>
                                 </div>
                                 <div class="col-md-3">
                                     <p><strong>No. de recibo:</strong> <span id="detalle_numrecibo"></span></p>
@@ -79,13 +79,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <p><strong>C√©dula propietario:</strong> <span id="detalle_cedula_propietario"></span></p>
+                                    <p><strong>CÈdula propietario:</strong> <span id="detalle_cedula_propietario"></span></p>
                                 </div>
                                 <div class="col-md-3">
                                     <p><strong>Propietario:</strong> <span id="detalle_propietario"></span></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <p><strong>Direcci√≥n:</strong> <span id="detalle_direccion"></span></p>
+                                    <p><strong>DirecciÛn:</strong> <span id="detalle_direccion"></span></p>
                                 </div>
                                 <div class="col-md-3">
                                     <p><strong>Vereda/Barrio:</strong> <span id="detalle_vereda_barrio"></span></p>
@@ -100,16 +100,17 @@
                                 </div>
                             </div>
                         </div>
+                            </div>
                     </div>
 
-                    <!-- Secci√≥n de Notificaciones -->
+                    <!-- SecciÛn de Notificaciones -->
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Notificaciones Administrativas</h4>
                             <hr>
                             <div class="mb-3">
                                 <button id="btnAgregarNotificacion" class="btn btn-success btn-sm">
-                                    <i class="fas fa-plus"></i> Agregar Notificaci√≥n
+                                    <i class="fas fa-plus"></i> Agregar NotificaciÛn
                                 </button>
                             </div>
 
@@ -117,12 +118,13 @@
                             <table id="tablaNotificaciones2" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Fecha</th>
+                                        <th>Fecha de notificaciÛn</th>
                                         <th>Hora</th>
-                                        <th>Tipo notificaci√≥n</th>
-                                        <th>Valor Enviado</th>
-                                        <th>Agencia Env√≠o</th>
-                                        <th>Estado</th>
+                                        <th>Medio de notificaciÛn</th>
+                                        <th>Valor enviado</th>
+                                        <th>Agencia envÌo</th>
+                                        <th>Responsable</th>
+                                        <th>Estado actual</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -132,75 +134,80 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
 
-<!-- Modal Agregar Notificaci√≥n -->
+<!-- Modal Agregar NotificaciÛn -->
 <div class="modal fade" id="modalNotificacion" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg" role="document"> <!-- CAMBIADO a modal-lg -->
-        <div class="modal-content">
+        <div class="modal-content shadow-lg rounded-4 border-0" >
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalNotificacionLabel">Agregar Notificaci√≥n</h5>
-                <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Cerrar">
-                    <span aria-hidden="true">&times;</span>
+                <h5 class="modal-title" id="modalNotificacionLabel">Agregar NotificaciÛn</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body p-4">
                 <form id="formNotificacion">
                     <input type="hidden" name="accion" value="insertar">
                     <input type="hidden" name="cod_predio" id="cod_predio_notificacion">
 
-                    <div class="row">
+                    <div class="row g-3">
                         <div class="col-md-6 mb-3">
-                            <label for="fecha_notificacion">Fecha</label>
+                            <label for="fecha_notificacion" class="form-label">Fecha de NotificaciÛn</label>
                             <input type="date" name="fecha_notificacion" id="fecha_notificacion" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="hora_notificacion">Hora</label>
+                            <label for="hora_notificacion" class="form-label">Hora</label>
                             <input type="time" name="hora_notificacion" id="hora_notificacion" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="tipo_notificacion">Tipo de Notificaci√≥n</label>
-                            <select name="tipo_notificacion" id="tipo_notificacion" class="form-control" required>
-                                <option value="-1">Seleccione una opci√≥n</option>
-                                <option value="Notificacion personal">Notificaci√≥n personal</option>
+                            <label for="tipo_notificacion" class="form-label">Medio de NotificaciÛn</label>
+                            <select name="tipo_notificacion" id="tipo_notificacion" class="form-select" required>
+                                <option value="-1">Seleccione una opciÛn</option>
+                                <option value="Notificacion personal">NotificaciÛn personal</option>
                                 <option value="Por correo certificado">Por correo certificado</option>
                                 <option value="Aviso o Edicto">Aviso o Edicto</option>
-                                <option value="Por publicacion en pagina web">Por publicaci√≥n en p√°gina web</option>
+                                <option value="Por publicacion en pagina web">Por publicaciÛn en p·gina web</option>
+                                <option value="Correo electrÛnico">Correo electrÛnico</option>
                                 <option value="Otra">Otra</option>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="valor_enviado">Valor Enviado</label>
+                            <label for="valor_enviado" class="form-label">Valor Enviado</label>
                             <input type="number" name="valor_enviado" id="valor_enviado" class="form-control" step="0.01" min="0">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="estado_notificacion">Estado</label>
-                            <select name="estado_notificacion" id="estado_notificacion" class="form-control" required>
-                                <option value="-1">Seleccione una opci√≥n</option>
-                                <option value="Entregado">Entregado</option>
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="Enviado">Enviado</option>
-                                <option value="Fallido">Fallido</option>
-                                <option value="Cancelado">Cancelado</option>
+                            <label for="estado_notificacion" class="form-label">Estado actual</label>
+                            <select name="estado_notificacion" id="estado_notificacion" class="form-select" required>
+                                <option value="-1">Seleccione una opciÛn</option>
+                                <option value="Persuasivo">Persuasivo</option>
+                                <option value="En Acuerdo ">En Acuerdo </option>
+                                <option value="Coactivo">Coactivo</option>
+                                <option value="Embargado">Embargado</option>
+                                <option value="Pagado">Pagado</option>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="agencia_envio">Agencia de Env√≠o</label>
+                            <label for="agencia_envio" class="form-label">Agencia de EnvÌo</label>
                             <input type="text" name="agencia_envio" id="agencia_envio" class="form-control" placeholder="Ej: Correos de Costa Rica">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="responsable" class="form-label">Responsable del seguimiento</label>
+                            <input type="text" name="responsable" id="responsable" class="form-control" placeholder="Funcionario encargado del caso">
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label for="observacion_notificacion">Observaci√≥n</label>
+                            <label for="observacion_notificacion" class="form-label">ObservaciÛn</label>
                             <textarea name="observacion_notificacion" id="observacion_notificacion" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
@@ -208,10 +215,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" form="formNotificacion" class="btn btn-success">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formNotificacion" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
             </div>
         </div>
     </div>

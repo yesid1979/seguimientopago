@@ -323,4 +323,57 @@ public class ModeloUsuarios {
         return lista;
     }
 
+    public Usuario buscarPorLoginOEmail(String loginOrEmail) {
+        Usuario usuario = null;
+        String sql = "SELECT * FROM usuarios WHERE login_usuario = ? OR email_usuario = ?";
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, loginOrEmail);
+            ps.setString(2, loginOrEmail);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("id_usuario"));
+                usuario.setLoginUsuario(rs.getString("login_usuario"));
+                usuario.setEmailUsuario(rs.getString("email_usuario"));
+                usuario.setPasswordUsuario(rs.getString("password_usuario"));
+                usuario.setEstadoUsuario(rs.getString("estado_usuario"));
+                usuario.setNomUsuario(rs.getString("nom_usuario"));
+                // ... asignar otros campos según tu tabla
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario;
+    }
+
+    public boolean actualizarPerfil(Usuario u) {
+        String sql = "UPDATE usuarios SET ced_usuario = ?, nom_usuario = ?, cel_usuario = ?, sexo_usuario = ?, password_usuario = ?, foto_usuario = ?, cod_profesion = ? "
+                + "WHERE id_usuario = ?";
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, u.getCedUsuario());
+            ps.setString(2, u.getNomUsuario());
+            ps.setString(3, u.getCelUsuario());
+            ps.setString(4, u.getSexoUsuario());
+            ps.setString(5, u.getPasswordUsuario());
+            ps.setString(6, u.getFotoUsuario());
+
+            // Profesión opcional
+            if (u.getProfesion() != null && u.getProfesion().getIdProfesion() != 0) {
+                ps.setInt(7, u.getProfesion().getIdProfesion());
+            } else {
+                ps.setNull(7, java.sql.Types.INTEGER);
+            }
+
+            // ID del usuario (WHERE)
+            ps.setInt(8, u.getIdUsuario());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

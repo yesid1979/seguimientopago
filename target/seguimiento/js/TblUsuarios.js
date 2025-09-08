@@ -1,9 +1,11 @@
 // Inicializar DataTable con Server-Side
 $(document).ready(function () {
 
+    console.log('¿Estás seguro?');
     // ================================
     // FUNCIONES PARA CARGAR COMBOS
     // ================================
+
     function cargarProfesiones(selectedId) {
         const $select = $('#cod_profesion');
         $select.prop('disabled', true).empty().append('<option value="">Cargando...</option>');

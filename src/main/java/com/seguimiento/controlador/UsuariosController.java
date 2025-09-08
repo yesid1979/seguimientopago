@@ -22,6 +22,8 @@ public class UsuariosController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String accion = request.getParameter("accion");
         if (accion == null) {
             accion = "listar";
@@ -48,6 +50,12 @@ public class UsuariosController extends HttpServlet {
                 break;
             case "listarRoles": // NUEVO
                 listarRoles(request, response);
+                break;
+            case "perfil":
+                mostrarPerfilUsuario(request, response);
+                break;
+            case "actualizarPerfil":
+                actualizarPerfilUsuario(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción no válida");
@@ -278,5 +286,64 @@ public class UsuariosController extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(new Gson().toJson(json));
         out.flush();
+    }
+
+    private void mostrarPerfilUsuario(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        int idUsuario = Integer.parseInt(request.getParameter("id_usuario"));
+        Usuario u = modelo.obtenerPorId(idUsuario);
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(new Gson().toJson(u));
+        out.flush();
+    }
+
+    private void actualizarPerfilUsuario(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        Usuario u = construirUsuarioDesdePerfil(request);
+        u.setIdUsuario(Integer.parseInt(request.getParameter("id_usuario")));
+        boolean exito = modelo.actualizarPerfil(u);
+        String mensaje = exito ? "Informacion actualizada correctamente" : "Error al actualizar la informacion";
+        enviarRespuestaJSON(response, exito, mensaje);
+    }
+
+    private Usuario construirUsuarioDesdePerfil(HttpServletRequest request) {
+        Usuario u = new Usuario();
+        u.setCedUsuario(request.getParameter("ced_usuario"));
+        u.setNomUsuario(request.getParameter("nom_usuario"));
+        u.setCelUsuario(request.getParameter("cel_usuario"));
+        u.setSexoUsuario(request.getParameter("sexo_usuario"));
+        u.setFotoUsuario(request.getParameter("foto_usuario"));
+
+        // Profesión opcional
+        String codProfesion = request.getParameter("cod_profesion");
+        if (codProfesion != null && !codProfesion.trim().isEmpty()) {
+            Profesion profesion = new Profesion();
+            profesion.setIdProfesion(Integer.parseInt(codProfesion));
+            u.setProfesion(profesion);
+        } else {
+            u.setProfesion(null);
+        }
+
+        // Contraseña: codificar solo si se envía
+        String password = request.getParameter("password_usuario");
+        if (password != null && !password.trim().isEmpty()) {
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+            u.setPasswordUsuario(hashedPassword);
+        } else {
+            // Si es actualización y no envía contraseña nueva, conserva la anterior
+            String idUsuario = request.getParameter("id_usuario");
+            if (idUsuario != null && !idUsuario.trim().isEmpty()) {
+                Usuario usuarioExistente = modelo.obtenerPorId(Integer.parseInt(idUsuario));
+                if (usuarioExistente != null) {
+                    u.setPasswordUsuario(usuarioExistente.getPasswordUsuario());
+                }
+            }
+        }
+
+        return u;
     }
 }

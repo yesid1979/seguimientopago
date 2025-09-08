@@ -98,6 +98,7 @@ $(document).ready(function () {
                 {data: 'tipoNotificacion'},
                 {data: 'valorEnviado', render: $.fn.dataTable.render.number('.', ',', 0, '$')},
                 {data: 'agenciaEnvio'},
+                {data: 'responsable'},
                 {data: 'estadoNotificacion'},
                 {
                     data: null,

@@ -21,7 +21,7 @@ public class ModeloNotificaciones {
     public List<Notificacion> listarNotificaciones(int start, int length, String searchValue, String orderColumn, String orderDir, int codPredio) {
         List<Notificacion> notificaciones = new ArrayList<>();
         String[] columnas = {"n.id_notificacion", "n.fecha_notificacion", "n.hora_notificacion", "n.tipo_notificacion",
-            "n.valor_enviado", "n.estado_notificacion", "n.agencia_envio"};
+            "n.valor_enviado", "n.estado_notificacion", "n.agencia_envio", "n.responsable_seguimiento"};
         String columnaOrden = "n.id_notificacion";
 
         if (orderColumn != null && !orderColumn.isEmpty()) {
@@ -32,7 +32,7 @@ public class ModeloNotificaciones {
         }
 
         String sql = "SELECT n.id_notificacion, n.fecha_notificacion, n.hora_notificacion, n.tipo_notificacion, "
-                + "n.valor_enviado, n.estado_notificacion, n.agencia_envio, n.observacion "
+                + "n.valor_enviado, n.estado_notificacion, n.agencia_envio, n.observacion,n.responsable_seguimiento "
                 + "FROM notificaciones n "
                 + "WHERE n.cod_predio = ? AND ("
                 + "(CAST(n.id_notificacion AS TEXT) ILIKE ? OR "
@@ -41,7 +41,8 @@ public class ModeloNotificaciones {
                 + "n.tipo_notificacion ILIKE ? OR "
                 + "CAST(n.valor_enviado AS TEXT) ILIKE ? OR "
                 + "n.estado_notificacion ILIKE ? OR "
-                + "n.agencia_envio ILIKE ?)) "
+                + "n.agencia_envio ILIKE ? OR "
+                + "n.responsable_seguimiento ILIKE ?)) "
                 + "ORDER BY " + columnaOrden + " " + orderDir + " LIMIT ? OFFSET ?";
 
         try (Connection con = Conexion.getConexion();
@@ -49,11 +50,11 @@ public class ModeloNotificaciones {
 
             String filtro = "%" + searchValue + "%";
             ps.setInt(1, codPredio);
-            for (int i = 2; i <= 8; i++) {
+            for (int i = 2; i <= 9; i++) {
                 ps.setString(i, filtro);
             }
-            ps.setInt(9, length);
-            ps.setInt(10, start);
+            ps.setInt(10, length);
+            ps.setInt(11, start);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -66,6 +67,7 @@ public class ModeloNotificaciones {
                     n.setEstadoNotificacion(rs.getString("estado_notificacion"));
                     n.setAgenciaEnvio(rs.getString("agencia_envio"));
                     n.setObservacion(rs.getString("observacion"));
+                    n.setResponsable(rs.getString("responsable_seguimiento"));
                     notificaciones.add(n);
                 }
             }
@@ -102,13 +104,14 @@ public class ModeloNotificaciones {
                 + "n.tipo_notificacion ILIKE ? OR "
                 + "CAST(n.valor_enviado AS TEXT) ILIKE ? OR "
                 + "n.estado_notificacion ILIKE ? OR "
-                + "n.agencia_envio ILIKE ?))";
+                + "n.agencia_envio ILIKE ? OR "
+                + "n.responsable_seguimiento ILIKE ?))";
         try (Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
             String filtro = "%" + searchValue + "%";
             ps.setInt(1, codPredio);
-            for (int i = 2; i <= 8; i++) {
+            for (int i = 2; i <= 9; i++) {
                 ps.setString(i, filtro);
             }
 
@@ -129,8 +132,8 @@ public class ModeloNotificaciones {
     // Insertar notificación
     public boolean insertarNotificacion(Notificacion notificacion) {
         String sql = "INSERT INTO notificaciones (cod_predio, fecha_notificacion, hora_notificacion, "
-                + "tipo_notificacion, valor_enviado, estado_notificacion, agencia_envio, observacion) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + "tipo_notificacion, valor_enviado, estado_notificacion, agencia_envio, observacion,responsable_seguimiento) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
         try (Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -142,6 +145,7 @@ public class ModeloNotificaciones {
             ps.setString(6, notificacion.getEstadoNotificacion());
             ps.setString(7, notificacion.getAgenciaEnvio());
             ps.setString(8, notificacion.getObservacion());
+            ps.setString(9, notificacion.getResponsable());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -154,7 +158,7 @@ public class ModeloNotificaciones {
     public boolean actualizarNotificacion(Notificacion notificacion) {
         String sql = "UPDATE notificaciones SET fecha_notificacion = ?, hora_notificacion = ?, "
                 + "tipo_notificacion = ?, valor_enviado = ?, estado_notificacion = ?, "
-                + "agencia_envio = ?, observacion = ? WHERE id_notificacion = ?";
+                + "agencia_envio = ?, observacion = ?, responsable_seguimiento=? WHERE id_notificacion = ?";
         try (Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -165,7 +169,8 @@ public class ModeloNotificaciones {
             ps.setString(5, notificacion.getEstadoNotificacion());
             ps.setString(6, notificacion.getAgenciaEnvio());
             ps.setString(7, notificacion.getObservacion());
-            ps.setInt(8, notificacion.getIdNotificacion());
+            ps.setString(8, notificacion.getResponsable());
+            ps.setInt(9, notificacion.getIdNotificacion());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -192,7 +197,7 @@ public class ModeloNotificaciones {
     public Notificacion obtenerNotificacionPorId(int idNotificacion) {
         Notificacion notificacion = null;
         String sql = "SELECT id_notificacion, cod_predio, fecha_notificacion, hora_notificacion, "
-                + "tipo_notificacion, valor_enviado, estado_notificacion, agencia_envio, observacion "
+                + "tipo_notificacion, valor_enviado, estado_notificacion, agencia_envio, observacion, responsable_seguimiento "
                 + "FROM notificaciones WHERE id_notificacion = ?";
         try (Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -209,6 +214,7 @@ public class ModeloNotificaciones {
                     notificacion.setEstadoNotificacion(rs.getString("estado_notificacion"));
                     notificacion.setAgenciaEnvio(rs.getString("agencia_envio"));
                     notificacion.setObservacion(rs.getString("observacion"));
+                    notificacion.setResponsable(rs.getString("responsable_seguimiento"));
                 }
             }
         } catch (SQLException e) {

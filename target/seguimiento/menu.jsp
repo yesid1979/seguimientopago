@@ -19,7 +19,7 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/predios/listado_predios.jsp">Predios</a>
                     </nav>
                 </div>
-                    <div class="sb-sidenav-menu-heading">Controles</div>
+                <div class="sb-sidenav-menu-heading">Controles</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
                     <div class="sb-nav-link-icon"><i class="fas fa-route"></i></div>
                     Seguimiento de
@@ -28,8 +28,8 @@
                 <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="${pageContext.request.contextPath}/notificaciones/listado_notificaciones.jsp">Control Administrativo </a>
-                        <a class="nav-link" href="#">Cobro Persuasivo</a>
-                        <a class="nav-link" href="#">Gestión Jurídica</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/cobros/listado_cobros.jsp">Cobro Persuasivo</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/juridica/listado_gestion.jsp">Gestión Jurídica</a>
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Administracion</div>
@@ -48,7 +48,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Conectado como:</div>
-            Administrador
+            ${sessionScope.usuario.nomUsuario} <!-- Muestra null si no está guardado --> <!-- Cambiado desde "Administrador" -->
         </div>
     </nav>
 </div>

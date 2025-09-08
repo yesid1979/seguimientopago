@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="./../header.jsp"/>
 <jsp:include page="./../menu.jsp"/>
 <div id="layoutSidenav_content">
@@ -12,7 +11,7 @@
             <div class="card mb-4">
                 <div class="card-body descripcion-tabla">
                     Esta tabla muestra el listado de contribuyentes registrados en el sistema.
-                    AquÃ­ podrÃ¡s consultar informaciÃ³n relevante como nombre y apellidos, nÃºmero de celular, correo electrÃ³nico, direcciÃ³n y estado actual de cada contribuyente.
+                    Aquí podrás consultar información relevante como nombre y apellidos, número de celular, correo electrónico, dirección y estado actual de cada contribuyente.
                 </div>
             </div>
             <div class="card mb-4">
@@ -26,11 +25,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>No. de cÃ©dula</th>
+                                    <th>No. de cédula</th>
                                     <th>Nombre y Apellidos</th>
-                                    <th>No. de telÃ©fono</th>
+                                    <th>No. de teléfono</th>
                                     <th>E-Mail</th>
-                                    <th>DirecciÃ³n</th>
+                                    <th>Dirección</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -45,50 +44,50 @@
     <!-- Modal para insertar/editar contribuyente -->
     <div class="modal fade" id="modalContribuyente" tabindex="-1" role="dialog" aria-labelledby="modalContribuyenteLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
+            <div class="modal-content shadow-lg rounded-4 border-0">
                 <form id="formContribuyente">
                     <!-- Campos ocultos -->
                     <input type="hidden" name="accion" id="accionContribuyente" value="insertar">
                     <input type="hidden" name="id_contribuyente" id="id_contribuyente">
 
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="modalContribuyenteLabel">GestiÃ³n de Contribuyente</h5>
-                        <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Cerrar">
-                            <span aria-hidden="true">&times;</span>
+                        <h5 class="modal-title" id="modalContribuyenteLabel">Gestión de Contribuyente</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true"></span>
                         </button>
                     </div>
 
-                    <div class="modal-body">
-                        <div class="row">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="ced_contribuyente">No. de cÃ©dula</label>
+                                <label for="ced_contribuyente" class="form-label">No. de cédula</label>
                                 <input type="text" name="ced_contribuyente" id="ced_contribuyente" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="nom_contribuyente">Nombres y apellidos</label>
+                                <label for="nom_contribuyente" class="form-label">Nombres y apellidos</label>
                                 <input type="text" name="nom_contribuyente" id="nom_contribuyente" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="correo_contribuyente">E-Mail</label>
+                                <label for="correo_contribuyente" class="form-label">E-Mail</label>
                                 <input type="email" name="correo_contribuyente" id="correo_contribuyente" class="form-control">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="cel_contribuyente">No. de celular</label>
+                                <label for="cel_contribuyente" class="form-label">No. de celular</label>
                                 <input type="text" name="cel_contribuyente" id="cel_contribuyente" class="form-control">
                             </div>
                             <div class="col-md-8">
-                                <label for="dir_contribuyente">DirecciÃ³n</label>
+                                <label for="dir_contribuyente" class="form-label">Dirección</label>
                                 <input type="text" name="dir_contribuyente" id="dir_contribuyente" class="form-control">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="estado_contribuyente">Estado</label>
-                                <select name="estado_contribuyente" id="estado_contribuyente" class="form-control" required>
+                                <label for="estado_contribuyente" class="form-label">Estado</label>
+                                <select name="estado_contribuyente" id="estado_contribuyente" class="form-select" required>
                                     <option value="Activo">Activo</option>
                                     <option value="Inactivo">Inactivo</option>
                                 </select>
@@ -96,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="modal-footer" >
                         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
                     </div>
