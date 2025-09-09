@@ -140,3 +140,4 @@
 </div>
 
 <jsp:include page="./../footer.jsp"/>
+<script src="${pageContext.request.contextPath}/js/TblPredios.js" charset="UTF-8"></script>

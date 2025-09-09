@@ -29,15 +29,7 @@
 <script src="${pageContext.request.contextPath}/assets/demo/chart-area-demo.js"></script>
 <script src="${pageContext.request.contextPath}/assets/demo/chart-bar-demo.js"></script>
 <script src="${pageContext.request.contextPath}/assets/demo/chart-area-demo.js"></script>
-<script src="${pageContext.request.contextPath}/js/TblUsuarios.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblClientes.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblPredios.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblRoles.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblNotificaciones.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblCobros.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblGestionJuridica.js" charset="UTF-8"></script>
 <script src="${pageContext.request.contextPath}/js/Dashboard.js" charset="UTF-8"></script>
-<script src="${pageContext.request.contextPath}/js/TblPerfil.js" charset="UTF-8"></script>
 </body>
 </html>
 

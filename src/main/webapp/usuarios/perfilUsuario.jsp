@@ -112,5 +112,6 @@
             </div>
         </div>
     </main>
-    
+
     <jsp:include page="./../footer.jsp"/>
+    <script src="${pageContext.request.contextPath}/js/TblPerfil.js" charset="UTF-8"></script>

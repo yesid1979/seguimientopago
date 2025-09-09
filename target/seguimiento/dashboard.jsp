@@ -30,7 +30,7 @@
                     <div class="card bg-success text-white mb-4">
                         <div class="card-body">Notificados</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="${pageContext.request.contextPath}/notificaciones/listado_notificaciones.jsp"><span id="totalNotificados">0</span> Ver detalles</a>
+                            <a class="small text-white stretched-link" href="${pageContext.request.contextPath}/notificaciones/total_notificaciones.jsp"><span id="totalNotificados">0</span> Ver detalles</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="card bg-danger text-white mb-4">
                         <div class="card-body">Proceso de coactivo</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="${pageContext.request.contextPath}/cobros/listado_cobros.jsp"> <span id="totalCoactivos">0</span> Ver detalles</a>
+                            <a class="small text-white stretched-link" href="${pageContext.request.contextPath}/cobros/total_cobros.jsp"> <span id="totalCoactivos">0</span> Ver detalles</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>

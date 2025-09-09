@@ -221,6 +221,5 @@
         </div>
     </div>
 </div>
-
-
-    <jsp:include page="./../footer.jsp"/>
+<jsp:include page="./../footer.jsp"/>
+<script src="${pageContext.request.contextPath}/js/TblNotificaciones.js" charset="UTF-8"></script>

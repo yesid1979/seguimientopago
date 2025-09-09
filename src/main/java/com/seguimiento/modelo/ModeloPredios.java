@@ -109,35 +109,35 @@ public class ModeloPredios {
     }
 
     // Contar predios filtrados
-public int contarPrediosFiltrados(String searchValue) {
-    // Contar el número de condiciones en el WHERE
-    int numCondiciones = 9; // Debe ser el mismo número que en listarPredios
-    
-    String sql = "SELECT COUNT(*) FROM predios p "
-            + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
-            + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? OR p.id_predio ILIKE ? OR p.matricula_predio ILIKE ? "
-            + "OR p.vereda_barrio ILIKE ? OR p.dir_predio ILIKE ? OR c.ced_contribuyente ILIKE ? "
-            + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? OR p.numrecibo_predio ILIKE ? OR p.vigencia_predio ILIKE ?)";
-    
-    try (Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement(sql)) {
-        String filtro = "%" + searchValue + "%";
-        
-        // Usar el número correcto de condiciones
-        for (int i = 1; i <= numCondiciones; i++) {
-            ps.setString(i, filtro);
-        }
-        
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt(1);
+    public int contarPrediosFiltrados(String searchValue) {
+        // Contar el número de condiciones en el WHERE
+        int numCondiciones = 9; // Debe ser el mismo número que en listarPredios
+
+        String sql = "SELECT COUNT(*) FROM predios p "
+                + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
+                + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? OR p.id_predio ILIKE ? OR p.matricula_predio ILIKE ? "
+                + "OR p.vereda_barrio ILIKE ? OR p.dir_predio ILIKE ? OR c.ced_contribuyente ILIKE ? "
+                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? OR p.numrecibo_predio ILIKE ? OR p.vigencia_predio ILIKE ?)";
+
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            String filtro = "%" + searchValue + "%";
+
+            // Usar el número correcto de condiciones
+            for (int i = 1; i <= numCondiciones; i++) {
+                ps.setString(i, filtro);
             }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return 0;
     }
-    return 0;
-}
 
     /* =============================================
        CRUD BÁSICO
@@ -268,5 +268,283 @@ public int contarPrediosFiltrados(String searchValue) {
             e.printStackTrace();
         }
         return p;
+    }
+
+    public List<Predio> listarPrediosTNotificados(int start, int length, String searchValue, String orderColumn, String orderDir) {
+        List<Predio> lista = new ArrayList<>();
+        String[] columnas = {
+            "p.nro_predio", "p.id_predio", "p.matricula_predio", "p.vereda_barrio",
+            "p.dir_predio", "p.numrecibo_predio", "c.nom_contribuyente", "c.ced_contribuyente", "p.vigencia_predio"
+        };
+        String columnaOrden = "p.nro_predio";
+        if (orderColumn != null && !orderColumn.isEmpty()) {
+            int colIndex = Integer.parseInt(orderColumn);
+            if (colIndex >= 0 && colIndex < columnas.length) {
+                columnaOrden = columnas[colIndex];
+            }
+        }
+
+        // Validar orderDir para evitar inyección SQL
+        if (!"ASC".equalsIgnoreCase(orderDir) && !"DESC".equalsIgnoreCase(orderDir)) {
+            orderDir = "ASC";
+        }
+
+        String sql = "SELECT p.nro_predio, p.id_predio, p.numrecibo_predio, p.matricula_predio, "
+                + "p.vereda_barrio, p.dir_predio, p.valor_pendiente, p.observacion, p.vigencia_predio, "
+                + "p.valor_enviado, p.estado_predio, p.cod_contribuyente, "
+                + "c.id_contribuyente, c.ced_contribuyente, c.nom_contribuyente "
+                + "FROM predios p "
+                + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
+                + "INNER JOIN notificaciones n ON p.nro_predio = n.cod_predio "
+                + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? "
+                + "OR CAST(p.id_predio AS TEXT) ILIKE ? "
+                + "OR p.matricula_predio ILIKE ? "
+                + "OR p.vereda_barrio ILIKE ? "
+                + "OR p.dir_predio ILIKE ? "
+                + "OR p.numrecibo_predio ILIKE ? "
+                + "OR c.ced_contribuyente ILIKE ? "
+                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? "
+                + "OR p.vigencia_predio ILIKE ?) "
+                + "ORDER BY " + columnaOrden + " " + orderDir + " LIMIT ? OFFSET ?";
+
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            String filtro = "%" + searchValue + "%";
+
+            // Establecer filtros
+            for (int i = 1; i <= 9; i++) {
+                ps.setString(i, filtro);
+            }
+
+            // Paginación
+            ps.setInt(10, length);
+            ps.setInt(11, start);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Predio p = new Predio();
+                    p.setNroPredio(rs.getInt("nro_predio"));
+                    p.setIdPredio(rs.getString("id_predio"));
+                    p.setNumreciboPredio(rs.getString("numrecibo_predio"));
+                    p.setMatriculaPredio(rs.getString("matricula_predio"));
+                    p.setVeredaBarrio(rs.getString("vereda_barrio"));
+                    p.setDirPredio(rs.getString("dir_predio"));
+                    p.setValorPendiente(rs.getDouble("valor_pendiente"));
+                    p.setObservacion(rs.getString("observacion"));
+                    p.setVigenciaPredio(rs.getString("vigencia_predio"));
+                    p.setValorEnviado(rs.getDouble("valor_enviado"));
+                    p.setEstadoPredio(rs.getString("estado_predio"));
+
+                    // Manejo de contribuyente
+                    Integer idContribuyente = rs.getObject("cod_contribuyente", Integer.class);
+                    Contribuyente contribuyente = new Contribuyente();
+                    if (idContribuyente != null) {
+                        contribuyente.setIdContribuyente(idContribuyente);
+                        contribuyente.setCedContribuyente(rs.getString("ced_contribuyente"));
+                        contribuyente.setNomContribuyente(rs.getString("nom_contribuyente"));
+                    } else {
+                        contribuyente.setIdContribuyente(0);
+                        contribuyente.setCedContribuyente("");
+                        contribuyente.setNomContribuyente("Sin asignar");
+                    }
+                    p.setContribuyente(contribuyente);
+
+                    lista.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    // Contar total de predios
+    public int contarTotalPrediosNot() {
+        String sql = "SELECT COUNT(*) FROM predios p "
+                + "INNER JOIN notificaciones n ON p.nro_predio = n.cod_predio";
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Contar predios filtrados
+    public int contarPrediosFiltradosNot(String searchValue) {
+        String sql = "SELECT COUNT(*) FROM predios p "
+                + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
+                + "INNER JOIN notificaciones n ON p.nro_predio = n.cod_predio "
+                + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? "
+                + "OR CAST(p.id_predio AS TEXT) ILIKE ? "
+                + "OR p.matricula_predio ILIKE ? "
+                + "OR p.vereda_barrio ILIKE ? "
+                + "OR p.dir_predio ILIKE ? "
+                + "OR p.numrecibo_predio ILIKE ? "
+                + "OR c.ced_contribuyente ILIKE ? "
+                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? "
+                + "OR p.vigencia_predio ILIKE ?)";
+
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            String filtro = "%" + searchValue + "%";
+
+            // Establecer filtros
+            for (int i = 1; i <= 9; i++) {
+                ps.setString(i, filtro);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Predio> listarPrediosTCobros(int start, int length, String searchValue, String orderColumn, String orderDir) {
+        List<Predio> lista = new ArrayList<>();
+        String[] columnas = {
+            "p.nro_predio", "p.id_predio", "p.matricula_predio", "p.vereda_barrio",
+            "p.dir_predio", "p.numrecibo_predio", "c.nom_contribuyente", "c.ced_contribuyente", "p.vigencia_predio"
+        };
+        String columnaOrden = "p.nro_predio";
+        if (orderColumn != null && !orderColumn.isEmpty()) {
+            int colIndex = Integer.parseInt(orderColumn);
+            if (colIndex >= 0 && colIndex < columnas.length) {
+                columnaOrden = columnas[colIndex];
+            }
+        }
+
+        // Validar orderDir para evitar inyección SQL
+        if (!"ASC".equalsIgnoreCase(orderDir) && !"DESC".equalsIgnoreCase(orderDir)) {
+            orderDir = "ASC";
+        }
+
+        String sql = "SELECT p.nro_predio, p.id_predio, p.numrecibo_predio, p.matricula_predio, "
+                + "p.vereda_barrio, p.dir_predio, p.valor_pendiente, p.observacion, p.vigencia_predio, "
+                + "p.valor_enviado, p.estado_predio, p.cod_contribuyente, "
+                + "c.id_contribuyente, c.ced_contribuyente, c.nom_contribuyente "
+                + "FROM predios p "
+                + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
+                + "INNER JOIN cobro n ON p.nro_predio = n.cod_predio "
+                + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? "
+                + "OR CAST(p.id_predio AS TEXT) ILIKE ? "
+                + "OR p.matricula_predio ILIKE ? "
+                + "OR p.vereda_barrio ILIKE ? "
+                + "OR p.dir_predio ILIKE ? "
+                + "OR p.numrecibo_predio ILIKE ? "
+                + "OR c.ced_contribuyente ILIKE ? "
+                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? "
+                + "OR p.vigencia_predio ILIKE ?) "
+                + "ORDER BY " + columnaOrden + " " + orderDir + " LIMIT ? OFFSET ?";
+
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            String filtro = "%" + searchValue + "%";
+
+            // Establecer filtros
+            for (int i = 1; i <= 9; i++) {
+                ps.setString(i, filtro);
+            }
+
+            // Paginación
+            ps.setInt(10, length);
+            ps.setInt(11, start);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Predio p = new Predio();
+                    p.setNroPredio(rs.getInt("nro_predio"));
+                    p.setIdPredio(rs.getString("id_predio"));
+                    p.setNumreciboPredio(rs.getString("numrecibo_predio"));
+                    p.setMatriculaPredio(rs.getString("matricula_predio"));
+                    p.setVeredaBarrio(rs.getString("vereda_barrio"));
+                    p.setDirPredio(rs.getString("dir_predio"));
+                    p.setValorPendiente(rs.getDouble("valor_pendiente"));
+                    p.setObservacion(rs.getString("observacion"));
+                    p.setVigenciaPredio(rs.getString("vigencia_predio"));
+                    p.setValorEnviado(rs.getDouble("valor_enviado"));
+                    p.setEstadoPredio(rs.getString("estado_predio"));
+
+                    // Manejo de contribuyente
+                    Integer idContribuyente = rs.getObject("cod_contribuyente", Integer.class);
+                    Contribuyente contribuyente = new Contribuyente();
+                    if (idContribuyente != null) {
+                        contribuyente.setIdContribuyente(idContribuyente);
+                        contribuyente.setCedContribuyente(rs.getString("ced_contribuyente"));
+                        contribuyente.setNomContribuyente(rs.getString("nom_contribuyente"));
+                    } else {
+                        contribuyente.setIdContribuyente(0);
+                        contribuyente.setCedContribuyente("");
+                        contribuyente.setNomContribuyente("Sin asignar");
+                    }
+                    p.setContribuyente(contribuyente);
+
+                    lista.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    // Contar total de predios
+    public int contarTotalPrediosCobros() {
+        String sql = "SELECT COUNT(*) FROM predios p "
+                + "INNER JOIN cobro n ON p.nro_predio = n.cod_predio";
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Contar predios filtrados
+    public int contarPrediosFiltradosCobros(String searchValue) {
+        String sql = "SELECT COUNT(*) FROM predios p "
+                + "LEFT JOIN contribuyente c ON p.cod_contribuyente = c.id_contribuyente "
+                + "INNER JOIN cobro n ON p.nro_predio = n.cod_predio "
+                + "WHERE (CAST(p.nro_predio AS TEXT) ILIKE ? "
+                + "OR CAST(p.id_predio AS TEXT) ILIKE ? "
+                + "OR p.matricula_predio ILIKE ? "
+                + "OR p.vereda_barrio ILIKE ? "
+                + "OR p.dir_predio ILIKE ? "
+                + "OR p.numrecibo_predio ILIKE ? "
+                + "OR c.ced_contribuyente ILIKE ? "
+                + "OR COALESCE(c.nom_contribuyente, '') ILIKE ? "
+                + "OR p.vigencia_predio ILIKE ?)";
+
+        try (Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            String filtro = "%" + searchValue + "%";
+
+            // Establecer filtros
+            for (int i = 1; i <= 9; i++) {
+                ps.setString(i, filtro);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -187,3 +187,4 @@
     </div>
 
     <jsp:include page="./../footer.jsp"/>
+    <script src="${pageContext.request.contextPath}/js/TblCobros.js" charset="UTF-8"></script>

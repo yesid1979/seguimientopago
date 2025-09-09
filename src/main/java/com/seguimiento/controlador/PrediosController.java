@@ -43,6 +43,12 @@ public class PrediosController extends HttpServlet {
             case "obtener":
                 obtenerPredioPorId(request, response);
                 break;
+            case "listarNotificados":
+                listarPrediosDataTablesNot(request, response);
+                break;
+            case "listarCobros":
+                listarPrediosDataTablesCob(request, response);
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción no válida");
         }
@@ -235,6 +241,60 @@ public class PrediosController extends HttpServlet {
         json.put("success", exito);
         json.put("message", mensaje);
         out.print(new Gson().toJson(json));
+        out.flush();
+    }
+
+    private void listarPrediosDataTablesNot(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int draw = Integer.parseInt(request.getParameter("draw"));
+        int start = Integer.parseInt(request.getParameter("start"));
+        int length = Integer.parseInt(request.getParameter("length"));
+        String searchValue = request.getParameter("search[value]");
+        String orderColumn = request.getParameter("order[0][column]");
+        String orderDir = request.getParameter("order[0][dir]");
+
+        List<Predio> predios = modelo.listarPrediosTNotificados(start, length, searchValue, orderColumn, orderDir);
+        int totalRegistros = modelo.contarTotalPrediosNot();
+        int registrosFiltrados = modelo.contarPrediosFiltradosNot(searchValue);
+
+        Map<String, Object> jsonResponse = new HashMap<>();
+        jsonResponse.put("draw", draw);
+        jsonResponse.put("recordsTotal", totalRegistros);
+        jsonResponse.put("recordsFiltered", registrosFiltrados);
+        jsonResponse.put("data", predios);
+
+        out.print(new Gson().toJson(jsonResponse));
+        out.flush();
+    }
+
+    private void listarPrediosDataTablesCob(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int draw = Integer.parseInt(request.getParameter("draw"));
+        int start = Integer.parseInt(request.getParameter("start"));
+        int length = Integer.parseInt(request.getParameter("length"));
+        String searchValue = request.getParameter("search[value]");
+        String orderColumn = request.getParameter("order[0][column]");
+        String orderDir = request.getParameter("order[0][dir]");
+
+        List<Predio> predios = modelo.listarPrediosTCobros(start, length, searchValue, orderColumn, orderDir);
+        int totalRegistros = modelo.contarTotalPrediosCobros();
+        int registrosFiltrados = modelo.contarPrediosFiltradosCobros(searchValue);
+
+        Map<String, Object> jsonResponse = new HashMap<>();
+        jsonResponse.put("draw", draw);
+        jsonResponse.put("recordsTotal", totalRegistros);
+        jsonResponse.put("recordsFiltered", registrosFiltrados);
+        jsonResponse.put("data", predios);
+
+        out.print(new Gson().toJson(jsonResponse));
         out.flush();
     }
 }

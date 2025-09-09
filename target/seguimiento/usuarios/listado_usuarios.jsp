@@ -145,3 +145,4 @@
 </div>
 
 <jsp:include page="./../footer.jsp"/>
+<script src="${pageContext.request.contextPath}/js/TblUsuarios.js" charset="UTF-8"></script>

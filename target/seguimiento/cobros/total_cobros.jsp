@@ -6,7 +6,7 @@
             <h1 class="mt-4">Predios</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard.jsp">Dashboard</a></li>
-                <li class="breadcrumb-item active">Listado de predios</li>
+                <li class="breadcrumb-item active">Listado de predios con cobro</li>
             </ol>
 
             <!-- Descripción -->
@@ -21,7 +21,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="tablaCobros" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
+                        <table id="tablaCobrosCo" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -114,7 +114,7 @@
                             </div>
 
                             <!-- Tabla de cobros -->
-                            <table id="tablaCobrosDetalle" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
+                            <table id="tablaCobrosDetalleCob" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Número de Intentos</th>
@@ -187,4 +187,4 @@
     </div>
 
     <jsp:include page="./../footer.jsp"/>
-    <script src="${pageContext.request.contextPath}/js/TblCobros.js" charset="UTF-8"></script>
+    <script src="${pageContext.request.contextPath}/js/TblCCobros.js" charset="UTF-8"></script>

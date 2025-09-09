@@ -171,4 +171,5 @@
     </div>
 
     <jsp:include page="./../footer.jsp"/>
+    <script src="${pageContext.request.contextPath}/js/TblGestionJuridica.js" charset="UTF-8"></script>
 </div>

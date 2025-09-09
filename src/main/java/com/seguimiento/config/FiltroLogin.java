@@ -25,29 +25,43 @@ public class FiltroLogin implements Filter {
         HttpSession sesion = req.getSession(false);
         String uri = req.getRequestURI();
 
-        // Permitir acceso a login y controlador
-        boolean esLogin = uri.endsWith("/login.jsp") || uri.endsWith("/ControladorUsuario.do")
-                || uri.endsWith("/ControladorLogin.do") || uri.endsWith("/ControladorSalir.do");
+        boolean esLogin = uri.endsWith("/login.jsp")
+                || uri.endsWith("/ControladorUsuario.do")
+                || uri.endsWith("/ControladorLogin.do")
+                || uri.endsWith("/ControladorSalir.do");
 
-        // Permitir acceso directo a /admin/ sin error
-        boolean esAdminRaiz = uri.equals(req.getContextPath() + "/*");
+        boolean esAdminRaiz = uri.equals(req.getContextPath() + "/");
 
-        // Permitir acceso a recursos estáticos
-        boolean esRecursoEstatico = uri.contains("/css/") || uri.contains("/js/") || uri.contains("/img/") || uri.contains("/assets/");
+        boolean esRecursoEstatico = uri.contains("/css/")
+                || uri.contains("/js/")
+                || uri.contains("/img/")
+                || uri.contains("/assets/");
 
         if (esLogin || esAdminRaiz || esRecursoEstatico) {
             chain.doFilter(request, response);
-        } else {
-            if (sesion == null || sesion.getAttribute("usuario") == null) {
-                if (sesion == null || sesion.isNew()) {
-                    res.sendRedirect(req.getContextPath() + "/login.jsp?error=expirada");
-                } else {
-                    res.sendRedirect(req.getContextPath() + "/login.jsp?error=prohibido");
-                }
-            } else {
-                chain.doFilter(request, response);
-            }
+            return;
         }
+
+        // Caso 1: Sesión inexistente → expirada
+        if (sesion == null) {
+            res.sendRedirect(req.getContextPath() + "/login.jsp?error=expirada");
+            return;
+        }
+
+        // Caso 2: Sesión existe pero usuario no autenticado → prohibido
+        if (sesion.getAttribute("usuario") == null) {
+            res.sendRedirect(req.getContextPath() + "/login.jsp?error=prohibido");
+            return;
+        }
+
+        // Si quieres verificar roles, agrega aquí
+        // Ejemplo:
+        // String rol = (String) sesion.getAttribute("rol");
+        // if (!"ADMIN".equals(rol) && uri.contains("/admin/")) {
+        //     res.sendRedirect(req.getContextPath() + "/login.jsp?error=prohibido");
+        //     return;
+        // }
+        chain.doFilter(request, response);
     }
 
     @Override
